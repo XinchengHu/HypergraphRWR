@@ -45,7 +45,7 @@ def compute_weights(H: xgi.Hypergraph) -> defaultdict:
 def compute_hyperdegrees(weights: dict) -> dict:
     return {i: sum(neigh.values()) for i, neigh in weights.items()}
 
-# ---------------------- 重启随机游走 ----------------------
+# ---------------------- 重置随机游走 ----------------------
 def perform_restart_random_walk(start_node, H, weights, restart_prob=0.05) -> int:
     current = start_node
     visited, steps, total_nodes = set(), 0, len(H.nodes)
