@@ -6,7 +6,7 @@ from collections import defaultdict
 from itertools import combinations
 from matplotlib import rcParams
 
-# -------------------- 全局字体配置（保持原功能） --------------------
+# -------------------- 全局字体配置 --------------------
 rcParams.update({
     "font.family": "Times New Roman",
     "font.size": 30,
@@ -49,7 +49,7 @@ for authors in hypergraph.values():
     if s < 2:
         continue
     w = s - 1
-    # 原实现对 i!=j 双向累加；此处用两两组合并对称累加，等价
+    # 对 i!=j 双向累加；此处用两两组合并对称累加，等价
     for i, j in combinations(authors, 2):
         weights[i][j] += w
         weights[j][i] += w
@@ -66,7 +66,7 @@ max_degree = max(node_degree_count.values())
 print(f"max_degree is {max_degree}")
 node_projected_stable_distribution = {i: d / max_degree for i, d in node_degree_count.items()}
 
-# -------------------- 画图小工具（避免重复） --------------------
+# -------------------- 画图小工具 --------------------
 def scatter_and_save(x, y, *, color, xlabel, ylabel, out, s=10, xlim=None, ylim=(0, 1), tick=20):
     plt.figure(figsize=(10, 6))
     plt.scatter(x, y, color=color, s=s)
@@ -88,7 +88,7 @@ scatter_and_save(
     color='b',
     xlabel='Node Index',
     ylabel=r'$P_i^{\infty} / \max_j P_j^{\infty}$',
-    out='5_1.png'
+    out='p/maxp.png'
 )
 
 # -------------------- 图2：所有节点 q/maxq --------------------
@@ -99,7 +99,7 @@ scatter_and_save(
     color='r',
     xlabel='Node Index',
     ylabel=r'$Q_i^{\infty} / \max_j Q_j^{\infty}$',
-    out='5_2.png'
+    out='q/maxq.png'
 )
 
 # -------------------- 图3：q 对 p（含对角线） --------------------
@@ -112,5 +112,5 @@ plt.ylabel(r'$P_i^{\infty} / \max_j P_j^{\infty}$', fontsize=20, fontweight='bol
 plt.tick_params(axis='both', which='major', labelsize=20)
 plt.grid(True)
 plt.tight_layout()
-plt.savefig('5_3.png', dpi=300)
+plt.savefig('q vs p.png', dpi=300)
 plt.show()
